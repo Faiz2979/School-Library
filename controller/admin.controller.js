@@ -1,7 +1,8 @@
 const adminModel=require('../models/index').admin;
 const Op = require('sequelize').Op;
+const hash = require('md5');
 
-exports.getAllMember = async (request,response)=>{
+exports.showAdmins = async (request,response)=>{
     let admin = await adminModel.findAll();
     return response.json({
         success: true,
@@ -10,7 +11,7 @@ exports.getAllMember = async (request,response)=>{
     })
 }
 
-exports.findMember = async (request,response)=>{
+exports.findAdmin = async (request,response)=>{
     let keyword = request.body.keyword;
 
     let admin = await adminModel.findAll({
@@ -29,12 +30,12 @@ exports.findMember = async (request,response)=>{
     })
 }
 
-exports.addMember = async (request,response)=> {
+exports.addAdmin = async (request,response)=> {
     let newAdmin = {
         name: request.body.name,
         address: request.body.address,
         username: request.body.username,
-        password: request.body.password,
+        password: hash(request.body.password),
         contact: request.body.contact
     }
     adminModel.create(newAdmin)
@@ -54,13 +55,13 @@ exports.addMember = async (request,response)=> {
     })
 }
 
-exports.updateMember = async (request,response)=> {
+exports.updateAdmin = async (request,response)=> {
     
     let dataMember = {
         name: request.body.name,
         address: request.body.address,
         username: request.body.username,
-        password: request.body.password,
+        password: hash(request.body.password),
         contact: request.body.contact
     }
 
@@ -83,7 +84,7 @@ exports.updateMember = async (request,response)=> {
     })
 }
 
-exports.deleteMember = async (request,response)=> {
+exports.removeAdmin = async (request,response)=> {
     
     let idAdmin=request.params.id;
     adminModel.destroy({where: {adminID: idAdmin}})

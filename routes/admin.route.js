@@ -3,13 +3,13 @@ const express = require('express');
 const app =express();
 
 app.use(express.json());
-const memberController = require('../controller/admin.controller');
+const adminsController = require('../controller/admin.controller');
 
-app.get('/', memberController.getAllMember);
-app.post('/find', memberController.findMember);
-app.post('/', memberController.addMember);
-app.put('/:id', memberController.updateMember);
-app.delete('/:id', memberController.deleteMember);
+app.get('/', adminsController.showAdmins);
+app.post('/find', adminsController.findAdmin);
+app.post('/', adminsController.addAdmin);
+app.put('/:adminID', adminsController.updateAdmin);
+app.delete('/:adminID', adminsController.removeAdmin);
 
 module.exports = app;
 

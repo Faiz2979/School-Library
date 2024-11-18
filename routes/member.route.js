@@ -8,8 +8,8 @@ const memberController = require('../controller/member.controller');
 app.get('/', memberController.getAllMember);
 app.post('/find', memberController.findMember);
 app.post('/', memberController.addMember);
-app.put('/:id', memberController.updateMember);
-app.delete('/:id', memberController.deleteMember);
+app.put('/:memberID', memberController.updateMember);
+app.delete('/:memberID', memberController.deleteMember);
 
 module.exports = app;
 

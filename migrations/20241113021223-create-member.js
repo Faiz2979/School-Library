@@ -12,18 +12,20 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
-
       },
       gender: {
         type: Sequelize.STRING,
-        allowNull: false,
-
+        allowNull: false
       },
       contact: {
         allowNull: false,
         type: Sequelize.STRING
       },
       address: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      profilePict: {
         allowNull: false,
         type: Sequelize.STRING
       },

@@ -1,5 +1,10 @@
 const memberModel=require('../models/index').member;
 const Op = require('sequelize').Op;
+const path = require('path');
+const fs = require('fs');
+
+const uploadpfp = require('../profilePict/up-profilePict').single('profilePict');
+
 
 exports.getAllMember = async (request,response)=>{
     let members = await memberModel.findAll();
@@ -30,27 +35,35 @@ exports.findMember = async (request,response)=>{
 }
 
 exports.addMember = async (request,response)=> {
-    let newMember = {
-        name: request.body.name,
-        gender: request.body.gender,
-        address: request.body.address,
-        contact: request.body.contact
-    }
-    memberModel.create(newMember)
-    .then(result => {
-        return response.json({
-            success: true,
-            data: result,
-            message: "Member has been added"
+    uploadpfp(request, response, async (error) => {
+        if(!request.file){
+            return profilePict= "default.jpg";
+        }
+    
+        let newMember = {
+            name: request.body.name,
+            gender: request.body.gender,
+            address: request.body.address,
+            contact: request.body.contact,
+            profilePict: request.file.filename
+        }
+        memberModel.create(newMember)
+        .then(result => {
+            return response.json({
+                success: true,
+                data: result,
+                message: "Member has been added"
+            })
+        })
+        .catch(error => {
+            return response.json({
+                success: false,
+                data: error,
+                message: "Member cannot be added"
+            })
         })
     })
-    .catch(error => {
-        return response.json({
-            success: false,
-            data: error,
-            message: "Member cannot be added"
-        })
-    })
+    
 }
 
 exports.updateMember = async (request,response)=> {
@@ -63,6 +76,18 @@ exports.updateMember = async (request,response)=> {
     }
 
     let idMember = request.params.id;
+    if (req.file) {
+        const newPict = await bookModel.findOne({ where: { bookID: bookID } });
+        const oldPict = newPict.cover;
+        const pathCover = path.join(__dirname, `../cover/${oldPict}`);
+
+        if (fs.existsSync(pathCover)) {
+            fs.unlinkSync(pathCover, err => console.log(err));
+        }
+
+        // Update the book cover if a new file is uploaded
+        book.cover = req.file.filename;
+    }
 
     memberModel.update(dataMember, {where: {memberID: idMember}})
     .then(result => {
