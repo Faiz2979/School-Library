@@ -1,6 +1,6 @@
-const borrowMOdel = require('../model/borrow.model').borrow;
+const borrowModel = require('../models/index').borrow;
 
-const detailOfBorrowModel = require('../model/borrow.model').detailOfBorrow;
+const detailOfBorrowModel = require('../models/index').detailOfBorrow;
 
 const Op = require('sequelize').Op;
 
@@ -13,7 +13,7 @@ exports.addBorrowing =async (request,response)=>{
         status:request.body.status
     }
 
-    borrowMOdel.create(newData)
+    borrowModel.create(newData)
     .then(result => {
         let borrowID = result.borrowID;
         let detailsOfBorrow = request.body.detailsOfBorrow;
@@ -56,7 +56,7 @@ exports.updateBorrowing = async (request,response)=>{
         status:request.body.status
     }
 
-    borrowMOdel.update(updateData,{
+    borrowModel.update(updateData,{
         where:{
             borrowID:borrowID
         }
@@ -95,3 +95,67 @@ exports.updateBorrowing = async (request,response)=>{
     
 }
 
+exports.deleteBorrowing = async (request,response)=>{
+    let borrowID = request.params.borrowID;
+    detailsOfBorrowModel.destroy({where:{borrowID:borrowID}})
+    .then(result => {
+            borrowModel.destroy({where:{borrowID:borrowID}})
+            .then(result => {
+            return response.json({
+                success: true,
+                data: result,
+                message: "Borrow has been deleted"
+            })
+            })
+        .catch(error => {
+            return response.json({
+                success: false,
+                data: error,
+                message: "Borrow cannot be deleted"
+            })
+        })
+    })
+}
+
+exports.returnBook = async (request,response)=>{
+    let borrowID = request.params.borrowID;
+
+    let today = new Date();
+    let currentDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+
+    borrowModel.update(
+        {returnDate:currentDate,
+        status:true
+    },
+    {where:{borrowID:borrowID}})
+    .then(result => {
+        return response.json({
+            success: true,
+            data: result,
+            message: "Book has been returned"
+        })
+    })
+    .catch(error => {
+        return response.json({
+            success: false,
+            data: error,
+            message: "Book cannot be returned",
+            errorMessage: error.message
+        })
+    })
+}
+
+exports.getBorrow = async (request,response)=>{
+    let data = await borrowModel.findAll({
+        include: [{
+            model:detailOfBorrowModel,
+            as:'detailsOfBorrow',
+            include:['book']
+        }]
+    })
+    return response.json({
+        success:true,
+        data:data,
+        message:"Data has been loaded"
+    })
+}

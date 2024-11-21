@@ -6,10 +6,14 @@ const port = 7070;
 const cors= require('cors');
 app.use(cors());
 
+// Middleware
 const memberRoute = require('./routes/member.route');
 const adminRoute = require('./routes/admin.route');
 const bookRoute = require('./routes/book.route');
+const borrowRoute = require('./routes/borrow.route');
+
 app.use('/member', memberRoute);
+app.use('/borrow', borrowRoute);
 app.use('/admin', adminRoute);
 app.use('/book', bookRoute);
 app.use('/cover', express.static('cover'));
