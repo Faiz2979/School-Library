@@ -1,5 +1,5 @@
-const allModel = require('../models');
-const memberModel = allModel.member;
+
+const memberModel = require('../model/borrow.model').member;
 const Op = require('sequelize').Op;
 const path = require('path');
 const fs = require('fs');
@@ -42,7 +42,7 @@ exports.addMember = [
                 gender: request.body.gender,
                 address: request.body.address,
                 contact: request.body.contact,
-                profilePict: request.file ? request.file.filename : null, // Simpan nama file jika ada
+                profilePict: request.file ? request.file.filename : 'profilePict/default.png', // Simpan nama file jika ada, jika tidak gunakan default.png
             };
 
             let result = await memberModel.create(newMember);
