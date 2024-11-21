@@ -57,7 +57,7 @@ exports.addAdmin = async (request,response)=> {
 
 exports.updateAdmin = async (request,response)=> {
     
-    let dataMember = {
+    let dataAdmin = {
         name: request.body.name,
         address: request.body.address,
         username: request.body.username,
@@ -65,9 +65,9 @@ exports.updateAdmin = async (request,response)=> {
         contact: request.body.contact
     }
 
-    let idMember = request.params.id;
+    let adminID = request.params.adminID;
 
-    adminModel.update(dataMember, {where: {memberID: idMember}})
+    adminModel.update(dataAdmin, {where: {adminID: adminID}})
     .then(result => {
         return response.json({
             success: true,
@@ -86,8 +86,8 @@ exports.updateAdmin = async (request,response)=> {
 
 exports.removeAdmin = async (request,response)=> {
     
-    let idAdmin=request.params.id;
-    adminModel.destroy({where: {adminID: idAdmin}})
+    let adminID=request.params.adminID;
+    adminModel.destroy({where: {adminID: adminID}})
     .then(result => {
         return response.json({
             success: true,
