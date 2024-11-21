@@ -69,7 +69,6 @@ exports.updateMember = [
 
             // Ambil data member berdasarkan ID
             let member = await memberModel.findOne({ where: { memberID: memberID } });
-
             if (!member) {
                 return response.status(404).json({
                     success: false,
