@@ -1,5 +1,5 @@
 
-const memberModel = require('../model/borrow.model').member;
+const memberModel = require('../models/index').member;
 const Op = require('sequelize').Op;
 const path = require('path');
 const fs = require('fs');

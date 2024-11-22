@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('details_of_borrows', {
-      borrowDetailsID: {
+      detailsID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
