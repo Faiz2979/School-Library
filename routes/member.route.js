@@ -9,7 +9,7 @@ const memberController = require('../controller/member.controller');
 
 app.get('/', memberController.getAllMember);
 app.post('/find',[validateMember], memberController.findMember);
-app.post('/', memberController.addMember);
+app.post('/',[validateMember], memberController.addMember);
 app.put('/:memberID',[validateMember], memberController.updateMember);
 app.delete('/:memberID', memberController.deleteMember);
 

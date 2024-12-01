@@ -12,6 +12,9 @@ const adminRoute = require('./routes/admin.route');
 const bookRoute = require('./routes/book.route');
 const borrowRoute = require('./routes/borrow.route');
 
+const auth=require('./routes/auth.route');
+
+app.use('/auth',auth);
 app.use('/member', memberRoute);
 app.use('/borrow', borrowRoute);
 app.use('/admin', adminRoute);

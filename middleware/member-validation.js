@@ -3,10 +3,10 @@ const validateMember = (request, response, next) => {
     const rules = Joi
     .object()
     .keys({
-        name: Joi.string().required,
-        address: Joi.string.required(),
-        contact: Joi.string.required(),
-        gender: Joi.string.valid('Male','Female'),
+        name: Joi.string().required(),
+        address: Joi.string().required(),
+        contact: Joi.string().required(),
+        gender: Joi.string().valid('Male','Female'),
         profilePict: Joi.string()
     })
     .options({abortEarly:false});
