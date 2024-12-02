@@ -6,6 +6,7 @@ let {validateMember} = require('../middleware/member-validation');
 
 app.use(express.json());
 const memberController = require('../controller/member.controller');
+const {authorize} = require('../controller/auth.controller');
 
 app.get('/', memberController.getAllMember);
 app.post('/find',[validateMember], memberController.findMember);

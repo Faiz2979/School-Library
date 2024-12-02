@@ -22,12 +22,37 @@ const autenticate=async(request,response,next)=>{
             token:token,
             data:dataAdmin
         });
+    } 
+    else {
+        return response.json({
+            success:false,
+            logged:false,
+            message:'Invalid login!'
+        });
+    }
+}
+
+const authorize=(request,response,next)=>{
+    let header = request.headers.authorization;
+    let tokenKey = header && header.split(' ')[1];
+
+    if(tokenKey==null){
+        return response.json({
+            success:false,
+            message:'Unauthorized User!'
+        });
     }
 
-    return response.json({
-        success:false,
-        logged:false,
-        message:'Invalid login!'
-    });
+    let secret='Mokleters';
+
+    jwt.verify(tokenKey, secret, (error, user) => {
+        if(error){
+            return response.json({
+                success:false,
+                message:'Invalid token!'
+            });
+        }
+    })
+    next();
 }
-module.exports={autenticate};
+module.exports={ autenticate,authorize };
