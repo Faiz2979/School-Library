@@ -14,7 +14,7 @@ export default function Book({ title, isbn, author, publisher, category, stock, 
     const backendURL = "http://localhost:5000";
     
     return (
-        <div className="book">
+        <div className="book bg-white">
             <div className="cover">
                 <img src={`${backendURL}/cover/${cover}`} alt={title} />
             </div>
