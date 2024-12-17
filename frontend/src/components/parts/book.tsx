@@ -11,10 +11,12 @@ interface bookProps {
 }
 
 export default function Book({ title, isbn, author, publisher, category, stock, cover }: bookProps) {
+    const backendURL = "http://localhost:5000";
+    
     return (
         <div className="book">
             <div className="cover">
-                <img src={cover} alt={title} />
+                <img src={`${backendURL}/cover/${cover}`} alt={title} />
             </div>
             <div className="info">
                 <h1>{title}</h1>
