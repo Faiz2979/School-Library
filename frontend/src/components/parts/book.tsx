@@ -1,5 +1,5 @@
 
-
+import Image from 'next/image';
 interface bookProps {
     title: string;
     isbn: string;
@@ -14,20 +14,24 @@ export default function Book({ title, isbn, author, publisher, category, stock, 
     const backendURL = "http://localhost:7070";
     
     return (
-        <div className="book relative group">
-            <div className="cover">
-                <img src={`${backendURL}/cover/${cover}`} className="w-40 h-60 object-cover" alt={title} />
-            </div>
-            <div className="info mt-2">
-                <h1 className="text-lg font-bold">{title}</h1>
-                <p className="text-sm text-gray-600">{author}</p>
-                <div className="details absolute top-0 left-0 w-full h-full bg-gray-800 bg-opacity-90 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <p>ISBN: {isbn}</p>
-                    <p>Publisher: {publisher}</p>
-                    <p>Category: {category}</p>
-                    <p>Stock: {stock}</p>
+        <div className="flex-shrink-0 w-64">
+                    <div className="relative group">
+                    <Image
+                        className="rounded-lg"
+                        src={`${backendURL}/cover/${cover}`}
+                        alt={title}
+                        width={500}
+                        height={600}
+                    />
+                    <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out rounded-lg">
+                        <h2 className="absolute bottom-4 left-4 text-white text-lg oxanium oxanium-semibold">
+                        {title}
+                        </h2>
+                        <h3 className="absolute bottom-4 left-4 text-white text-lg oxanium oxanium-semibold">
+                        {author}
+                        </h3>
+                    </div>
+                    </div>
                 </div>
-            </div>
-        </div>
     );
 }
