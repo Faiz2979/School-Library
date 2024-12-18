@@ -1,6 +1,6 @@
-    'use client'
-    import { useEffect, useState } from "react";
-import { LoginForm } from "./login";
+'use client'
+import { useEffect, useState } from "react";
+import Login from "./forms/login";
 
     export default function Header() {
         const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -69,7 +69,7 @@ import { LoginForm } from "./login";
                     </nav>
                 </header>
                 {showLoginForm && (
-                    <LoginForm
+                    <Login
                         onClose={() => setShowLoginForm(false)}
                         onLoginSuccess={handleLoginSuccess}
                     />

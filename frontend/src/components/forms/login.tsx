@@ -6,7 +6,7 @@
     onLoginSuccess: (username: string) => void;
     }
 
-    function LoginForm({ onClose, onLoginSuccess }: LoginFormProps) {
+    export default function Login({ onClose, onLoginSuccess }: LoginFormProps) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -112,5 +112,4 @@
     );
     }
 
-    export { LoginForm };
 
