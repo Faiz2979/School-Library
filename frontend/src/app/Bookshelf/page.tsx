@@ -45,8 +45,8 @@ import { useEffect, useState } from 'react';
     
         return (
         <div className="bg-gradient-to-tr from-black to-[#08002e] overflow-hidden relative">
-            <div className='min-h-screen'>
-            <h1>Bookshelf</h1>
+            <div className='min-h-screen oxanium'>
+            <h1 className='oxanium-semi-bold'>Bookshelf</h1>
             <div className="flex justify-center align-center flex-wrap">
             {loading ? (
                 <Loader />
