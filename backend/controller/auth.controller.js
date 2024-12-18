@@ -32,27 +32,33 @@ const autenticate=async(request,response,next)=>{
     }
 }
 
-const authorize=(request,response,next)=>{
-    let header = request.headers.authorization;
-    let tokenKey = header && header.split(' ')[1];
-
-    if(tokenKey==null){
-        return response.json({
-            success:false,
-            message:'Unauthorized User!'
+const authorize = (request, response, next) => {
+    const header = request.headers.authorization;
+    const tokenKey = header && header.split(' ')[1];
+    console.log("it works");
+    
+    if (!tokenKey) {
+        return response.status(401).json({
+            success: false,
+            message: 'Unauthorized User!',
         });
     }
+    else{
+        const secret = 'Mokleters';
 
-    let secret='Mokleters';
+        jwt.verify(tokenKey, secret, (error, user) => {
+            if (error) {
+                return response.status(403).json({
+                    success: false,
+                    message: 'Invalid token!',
+                });
+            }
 
-    jwt.verify(tokenKey, secret, (error, user) => {
-        if(error){
-            return response.json({
-                success:false,
-                message:'Invalid token!'
-            });
-        }
-    })
-    next();
-}
+            // Attach user data to the request if needed
+            request.user = user;
+            next();
+            
+        });
+    }
+};
 module.exports={ autenticate,authorize };

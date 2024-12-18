@@ -1,6 +1,6 @@
-    'use client'
+'use client'
 
-    import Header from "@/components/header";
+import Header from "@/components/header";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import AdminLocked from "./components/admin-locked";
@@ -26,7 +26,7 @@ import AdminSidebar from "./components/admin-sidebar";
         }
 
         try {
-            const response = await fetch('http://localhost:7070/api/profile', {
+            const response = await fetch('http://localhost:7070/auth', {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
