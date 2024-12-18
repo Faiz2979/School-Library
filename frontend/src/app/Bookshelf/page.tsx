@@ -1,5 +1,5 @@
 'use client';
-import Book from '@/components/parts/book';
+import { BookCard } from '@/components/parts/Card';
 import Loader from '@/components/parts/loader';
 import { useEffect, useState } from 'react';
     export default function Bookshelf() {
@@ -49,10 +49,10 @@ import { useEffect, useState } from 'react';
             <h1>Bookshelf</h1>
             <div className="flex justify-center align-center flex-wrap">
             {loading ? (
-                <Loader size={48} color="#3498db" />
+                <Loader />
             ) : books.length > 0 ? (
                 books.map((book) => (
-                <Book key={book.isbn} {...book}></Book>
+                <BookCard key={book.isbn} {...book}></BookCard>
                 ))
             ) : (
                 <p>No books available.</p>
