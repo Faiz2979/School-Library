@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Login from "./forms/login";
 
-    export default function Header() {
+export default function Header() {
         const [isAuthenticated, setIsAuthenticated] = useState(false);
         const [showLoginForm, setShowLoginForm] = useState(false);
 
