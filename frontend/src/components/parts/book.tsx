@@ -14,7 +14,7 @@ export default function Book({ title, isbn, author, publisher, category, stock, 
     const backendURL = "http://localhost:7070";
     
     return (
-        <div className="flex-shrink-1 w-auto rounded-lg hover:outline outline-sky-400 outline-offset-2 transition-all duration-100 ease-in-out outline-2">
+        <div className="flex-shrink-1 w-auto rounded-lg hover:outline outline-[#2103b4] outline-offset-2 transition-all duration-100 ease-in-out outline-2">
             <div className="relative group">
                 <Image
                     className="rounded-lg"

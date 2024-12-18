@@ -44,20 +44,20 @@ import { useEffect, useState } from 'react';
         }, []);
     
         return (
-        <div className="m-2">
+        <div className="bg-gradient-to-tr from-black to-[#08002e] overflow-hidden relative">
+            <div className='min-h-screen'>
             <h1>Bookshelf</h1>
             <div className="flex justify-center align-center flex-wrap">
             {loading ? (
                 <Loader size={48} color="#3498db" />
             ) : books.length > 0 ? (
                 books.map((book) => (
-                <Book key={book.isbn} {...book}>
-
-                </Book>
+                <Book key={book.isbn} {...book}></Book>
                 ))
             ) : (
                 <p>No books available.</p>
             )}
+            </div>
             </div>
         </div>
         );
