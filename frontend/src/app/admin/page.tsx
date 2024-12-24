@@ -44,6 +44,25 @@ export default function AdminDashboard() {
         console.error('Error fetching borrowed books:', error);
       }
     }
+
+    const fetchOverdueReturns = async () => {
+      try{
+        const response = await fetch('http://localhost:7070/borrow/overdue', {
+          method: 'GET',
+        });
+        if(!response.ok){
+          console.error('Failed to fetch overdue returns:', response.statusText);
+          return;
+        }
+        const data = await response.json();
+        console.log('Overdue returns response:', data.total_overdue);
+        setOverdueReturns(data.total_overdue);
+      }
+      catch (error) {
+        console.error('Error fetching overdue returns:', error
+        );
+    }
+
     useEffect(() => {
         fetchBookCount();
         fetchBorrowedBooks();
@@ -67,9 +86,12 @@ export default function AdminDashboard() {
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow">
                     <h3 className="text-lg font-semibold mb-2">Overdue Returns</h3>
-                    <p className="text-3xl font-bold text-red-600">5</p>
+                    <p className="text-3xl font-bold text-red-600"> 
+                      {overdueReturns}
+                    </p>
                 </div>
             </div>
         </div>
     );
+  }
 }
