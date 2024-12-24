@@ -44,7 +44,7 @@ export default function Login({ onClose, onLoginSuccess }: LoginProps) {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div className="fixed inset-0 flex items-center text-black justify-center bg-gray-800 bg-opacity-50">
             <div className="bg-white p-6 rounded-lg shadow-lg">
                 <h2 className="text-xl font-bold mb-4">Login</h2>
                 {error && <p className="text-red-500 mb-4">{error}</p>}

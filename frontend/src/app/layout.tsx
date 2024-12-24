@@ -1,7 +1,6 @@
 'use client';
 
 import { AuthProvider } from "@/app/admin/components/authContext"; // Lokasi AuthContext
-import Header from '@/components/parts/header'; // Lokasi Header
 import { Geist, Geist_Mono } from "next/font/google";
 import './custom.css';
 import './globals.css';
@@ -21,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable}`}>
                 <AuthProvider> {/* Tetap digunakan untuk otentikasi global */}
-                    <Header />
+                    {/* <Header /> */}
                     <main>{children}</main>
                 </AuthProvider>
             </body>
