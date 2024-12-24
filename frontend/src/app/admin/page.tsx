@@ -7,21 +7,27 @@ export default function AdminDashboard() {
     const [overdueReturns, setOverdueReturns] = useState(0);
 
     const fetchBookCount = async () => {
-        try {
-            const response = await fetch('http://localhost:7070/book/', {
-                method: 'GET',
-            });
-            if (!response.ok) {
-                console.error('Failed to fetch book count:', response.statusText);
-                return;
-            }
-            const data = await response.json();
-            console.log('Book count response:', data);
-            setBookCount((data.total_books*data.data.stock));
-        } catch (error) {
-            console.error('Error fetching book count:', error);
-        }
-    };
+      try {
+          const response = await fetch('http://localhost:7070/book/', {
+              method: 'GET',
+          });
+          if (!response.ok) {
+              console.error('Failed to fetch book count:', response.statusText);
+              return;
+          }
+  
+          const data = await response.json();
+          console.log('Book count response:', data);
+  
+          // Menghitung total stock dari semua buku
+          const totalStock = data.data.reduce((total: number, book: { stock: number }) => total + book.stock, 0);
+          
+          setBookCount(totalStock); // Set nilai total stock ke state
+      } catch (error) {
+          console.error('Error fetching book count:', error);
+      }
+  };
+  
     const fetchBorrowedBooks = async () => {
       try{
         const response = await fetch('http://localhost:7070/borrow/total', {
