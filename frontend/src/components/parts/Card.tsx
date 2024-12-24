@@ -55,7 +55,7 @@ import { BookPopup } from './Popup';
                 <h3 className="text-lg font-bold mb-1 line-clamp-1">{book.title}</h3>
                 <p className="text-sm mb-2 line-clamp-1">{book.author}</p>
                 <div className="flex items-center justify-between">
-                <span className="text-xs bg-red-600 px-2 py-1 rounded">{book.category}</span>
+                <span className="text-xs bg-blue-600 px-2 py-1 rounded">{book.category}</span>
                 <span className="text-xs">{book.stock} in stock</span>
                 </div>
             </motion.div>

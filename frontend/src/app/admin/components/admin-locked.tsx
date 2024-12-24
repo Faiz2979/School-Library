@@ -1,9 +1,8 @@
-    import Header from "@/components/header";
-
+    
     export default function AdminLocked() {
     return (
         <div className="min-h-screen bg-gray-100">
-        <Header />
+        {/* <Header /> */}
         <div className="flex items-center justify-center h-[calc(100vh-64px)]">
             <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
             <div className="mb-4 text-red-500">

@@ -8,8 +8,10 @@ const upload = require('../cover/up-cover').single('cover');
 // Fetch all books
 exports.getAllBooks = async (req, res) => {
     let books = await bookModel.findAll();
+    const bookCount = await bookModel.count();
     return res.json({
         success: true,
+        total_books: bookCount,
         data: books,
         message: 'Books fetched successfully'
     });

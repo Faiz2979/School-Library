@@ -1,8 +1,8 @@
 'use client';
 
+import Login from '@/components/forms/login';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Login from './forms/login';
 
 export default function Header() {
     const router = useRouter();
@@ -12,7 +12,7 @@ export default function Header() {
     const [showLoginForm, setShowLoginForm] = useState(false);
 
     useEffect(() => {
-        const verifyToken = async () => {
+        const checkAuthStatus = () => {
             const token = localStorage.getItem('token');
             if (!token) {
                 setIsAuthenticated(false);
@@ -20,46 +20,30 @@ export default function Header() {
                 return;
             }
 
+            // Decode token payload (basic example, or you can validate through backend)
             try {
-                const response = await fetch('http://localhost:7070/auth', {
-                    method: 'GET',
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-
-                if (!response.ok) {
-                    setIsAuthenticated(false);
-                    setIsAdmin(false);
-                    localStorage.removeItem('token');
-                } else {
-                    const { role } = await response.json();
-                    setIsAuthenticated(true);
-                    setIsAdmin(role === 'admin');
-                }
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                setIsAuthenticated(true);
+                setIsAdmin(payload.role === 'admin');
             } catch (error) {
-                console.error('Error verifying token:', error);
+                console.error('Invalid token:', error);
                 setIsAuthenticated(false);
                 setIsAdmin(false);
                 localStorage.removeItem('token');
             }
         };
 
-        verifyToken();
+        checkAuthStatus();
     }, []);
 
     const handleLogout = async () => {
         setIsLoggingOut(true);
         try {
-            const response = await fetch('http://localhost:7070/authorize', {
-                method: 'POST',
-            });
-            if (response.ok) {
-                localStorage.removeItem('token');
-                setIsAuthenticated(false);
-                setIsAdmin(false);
-                router.push('/admin/login');
-            } else {
-                console.error('Logout failed');
-            }
+            // Optionally call an API endpoint for logout if needed
+            localStorage.removeItem('token');
+            setIsAuthenticated(false);
+            setIsAdmin(false);
+            router.push('/login'); // Redirect to login page
         } catch (error) {
             console.error('Logout error:', error);
         } finally {
@@ -67,7 +51,8 @@ export default function Header() {
         }
     };
 
-    const handleLoginSuccess = (role: string) => {
+    const handleLoginSuccess = (role: string, token: string) => {
+        localStorage.setItem('token', token);
         setIsAuthenticated(true);
         setIsAdmin(role === 'admin');
         setShowLoginForm(false);
@@ -76,13 +61,15 @@ export default function Header() {
     return (
         <>
             <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
-                <h1 className="text-lg font-bold">My App</h1>
+                <h1 className="text-lg font-bold cursor-pointer" onClick={() => router.push('/')}>
+                    My App
+                </h1>
                 <nav>
                     {isAuthenticated ? (
                         <>
                             {isAdmin && (
                                 <button
-                                    onClick={() => router.push('/admin/dashboard')}
+                                    onClick={() => router.push('/admin')}
                                     className="px-4 py-2 bg-green-500 rounded-lg hover:bg-green-600 mr-2"
                                 >
                                     Admin Dashboard

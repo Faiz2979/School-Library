@@ -112,3 +112,21 @@ exports.getBorrow = async (request, response) => {
         message: `All borrowing book have been loaded`
     });
 };
+
+exports.getTotalBorrowedBooks = async (request, response) => {
+    try {
+        // Menghitung total qty dari details_of_borrow
+        const totalBorrowedBooks = await detailsOfBorrowModel.sum('qty');
+
+        response.json({
+            success: true,
+            total_borrowed_books: totalBorrowedBooks || 0 // Jika null, default ke 0
+        });
+    } catch (error) {
+        console.error('Error fetching total borrowed books:', error);
+        response.status(500).json({
+            success: false,
+            message: 'Failed to fetch total borrowed books',
+        });
+    }
+};
