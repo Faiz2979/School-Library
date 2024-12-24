@@ -130,3 +130,48 @@ exports.getTotalBorrowedBooks = async (request, response) => {
         });
     }
 };
+
+exports.getOverdueBooks = async (request, response) => {
+    try {
+        const overdueBooks = await borrowModel.findAll({
+            include: [
+                {
+                    model: detailsOfBorrowModel,
+                    as: 'details_of_borrow', // Relasi ke detail peminjaman
+                    include: [
+                        {
+                            model: bookModel,
+                            as: 'book', // Relasi detail peminjaman ke buku
+                        },
+                    ],
+                },
+            ],
+        });
+        
+        const overdueCount = overdueBooks.filter((borrow) => {
+            const borrowDate = new Date(borrow.date_of_borrow); // Tanggal peminjaman
+            const overdueThreshold = new Date(borrowDate);
+            overdueThreshold.setDate(borrowDate.getDate() + 3); // Tambahkan 3 hari ke tanggal peminjaman
+        
+            // Jika status TRUE, gunakan date_of_return. Jika FALSE, gunakan tanggal saat ini.
+            const returnDate = borrow.status
+                ? new Date(borrow.date_of_return) // Jika sudah dikembalikan
+                : new Date(); // Jika belum dikembalikan
+        
+            return returnDate > overdueThreshold; // Periksa apakah terlambat
+        }).length;
+        
+        response.json({
+            success: true,
+            total_overdue: overdueCount, // Jumlah buku yang terlambat
+            data: overdueBooks, // Data lengkap buku yang diperiksa (opsional)
+        });
+        
+    } catch (error) {
+        console.error('Error fetching overdue books:', error);
+        response.status(500).json({
+            success: false,
+            message: 'Failed to fetch overdue books',
+        });
+    }
+}

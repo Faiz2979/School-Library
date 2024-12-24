@@ -11,5 +11,5 @@ app.delete('/:borrowID',[authorize], borrowController.deleteBorrowing);
 app.get('/return/:borrowID',[authorize], borrowController.returnBook);
 app.get('/', borrowController.getBorrow);
 app.get('/total', borrowController.getTotalBorrowedBooks);
-
+app.get('/overdue', borrowController.getOverdueBooks);
 module.exports = app;
