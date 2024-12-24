@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 
     const menuItems = [
         { href: '/admin', label: 'Dashboard', icon: BarChart },
-        { href: '/admin/books', label: 'Books', icon: Book },
+        { href: '/admin/book', label: 'Books', icon: Book },
         { href: '/admin/users', label: 'Users', icon: Users },
         { href: '/admin/settings', label: 'Settings', icon: Settings },
     ];
